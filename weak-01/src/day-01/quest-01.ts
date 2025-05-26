@@ -18,6 +18,7 @@ export function addNumbers(a: number, b: number): number {
   if (typeof a !== "number" || typeof b !== "number") {
     throw new Error("이건 숫자가 아닌데요?");
   }
+
   return a + b;
 }
 
@@ -27,13 +28,19 @@ export function stringifyValue(value: unknown): string {
 }
 
 // 문제 5. 아래 함수는 두 값을 비교하여 결과를 반환합니다. 느슨한 동등성(==)과 엄격 동등성(===)의 차이를 이해하고, 함수의 동작 결과를 예측하세요.
-export function compareValues(a: unknown, b: unknown) {
+enum EqualLevel {
+  Strict = "엄격한 동등성",
+  Loose = "느슨한 동등성",
+  NotEqual = "동등하지 않음",
+}
+
+export function compareValues(a: unknown, b: unknown): EqualLevel {
   if (a === b) {
-    return "엄격한 동등성";
+    return EqualLevel.Strict;
   } else if (a == b) {
-    return "느슨한 동등성";
+    return EqualLevel.Loose;
   } else {
-    return "동등하지 않음";
+    return EqualLevel.NotEqual;
   }
 }
 
