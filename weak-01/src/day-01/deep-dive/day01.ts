@@ -1,0 +1,153 @@
+// @ts-ignore
+type TUser = {
+  name: string;
+  email?: string;
+};
+
+type TProduct = {
+  name: string;
+  price: number;
+  isInStock: boolean;
+};
+
+interface IUser {
+  name: string;
+  email?: string;
+}
+
+interface IProduct {
+  name: string;
+  price: number;
+  isInStock: boolean;
+}
+
+// 확장 예시
+type TAdmin = TUser & {
+  isAdmin: boolean;
+};
+
+interface IAdmin extends IUser {
+  isAdmin: boolean;
+}
+
+// 병합 가능성
+// @ts-ignore
+type TUser = {
+  city: string;
+};
+// ❌ 에러 발생: Duplicate identifier
+
+interface IUser {
+  city: string;
+}
+// ✅ 최종적으론 { name: string, age:number, city: string } 으로 병합됨 고로 확장성과
+// 선언 병합이 필요한 경우엔 interface를 사용하는 것이 좋음 예: 전역 타입 확장, Window 인터페이스 커스텀
+
+// isPrimitive 함수 조건부 타입, 제네릭 도입해서 재사용성 높이기
+
+/**
+ * 원시 타입인지 검사하는 타입 가드 함수입니다.
+ *
+ * 제네릭 T 타입을 받고
+ * T가 object 또는 Function 타입이면 never를 반환하여 타입 좁히기를 수행합니다.
+ * 즉, object나 함수 타입일 경우 false를 반환하고, 원시 타입인 경우 true를 반환합니다.
+ *
+ * @param {T} value - 검사할 값
+ * @returns {value is T extends object | Function ? never : T}
+ *   value가 object 또는 Function이 아니면 원시 타입임을 나타내는 타입 가드 결과
+ */
+function isPrimitive<T>(
+  value: T
+): value is T extends object | Function ? never : T {
+  return (
+    value === null || (typeof value !== "object" && typeof value !== "function")
+  );
+}
+
+/**
+ * @returns {value is "hello"}
+ */
+isPrimitive("hello"); // true
+/**
+ * @returns {value is never}
+ */
+isPrimitive({ name: "kim" }); // false
+
+// Record, Pick, Partial 등의 유틸리티 타입 직접 구현해보기
+
+/**
+ * Record 타입은 주어진 키 집합 K에 대해,
+ * 각 키가 타입 T를 갖는 객체 타입을 생성합니다.
+ *
+ * @template K - 객체의 키로 사용할 문자열, 숫자, 심볼 타입들의 집합 (keyof any로 제한)
+ * @template T - 모든 키에 할당할 값의 타입
+ *
+ * @example
+ * ```ts
+ * // id와 email을 키로 하고 string 타입을 값으로 가지는 객체 타입 생성
+ * type UserRecord = Record<'id' | 'email', string>;
+ * // 결과 타입: {
+ * //   id: string;
+ * //   email: string;
+ * // }
+ * ```
+ */
+type Record<K extends keyof any, T> = {
+  [P in K]: T;
+};
+
+export type UserRecord = Record<"id" | "email", string>;
+
+/**
+ * Pick 타입은 주어진 타입 T에서
+ * 특정 키 집합 K에 해당하는 속성들만 선택하여 새로운 객체 타입을 만듭니다.
+ *
+ * @template T - 원본 객체 타입
+ * @template K - 선택할 키들의 집합 (T의 키들 중 일부)
+ *
+ * @example
+ * ```ts
+ * interface User {
+ *   name: string;
+ *   age: number;
+ *   isAdmin: boolean;
+ * }
+ *
+ * // User 타입에서 name 속성만 선택한 타입 생성
+ * type UserPick = Pick<User, "name">;
+ * // 결과 타입: {
+ * //   name: string;
+ * // }
+ * ```
+ */
+type Pick<T, K extends keyof T> = {
+  [P in K]: T[P];
+};
+
+export type UserPick = Pick<TUser, "name">;
+
+/**
+ * Partial 타입은 주어진 타입 T의 모든 속성을 선택적으로(optional) 만듭니다.
+ *
+ * @template T - 원본 객체 타입
+ *
+ * @example
+ * ```ts
+ * interface User {
+ *   name: string;
+ *   : number;
+ * }
+ *
+ * // User 타입의 모든 속성이 선택적(optional)인 타입 생성
+ * type UserPartial = Partial<User>;
+ * // 결과 타입: {
+ * //   name?: string;
+ * //   age?: number;
+ * // }
+ * ```
+ */
+type Partial<T> = {
+  [P in keyof T]?: T[P];
+};
+
+export type UserPartial = Partial<TUser>;
