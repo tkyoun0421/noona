@@ -31,10 +31,11 @@ describe("문제 1.아래 객체를 보고 user의 타입을 작성하세요", (
 });
 
 describe("문제 2. 읽기 전용(readonly) 배열을 생성하고, 배열에 직접 값을 추가하거나 변경하려고 하면 오류가 발생해야 합니다.", () => {
-  it("읽기 전용 배열에 값을 추가하면 에러를 반환해야 한다", () => {
-    // @ts-expect-error: readonly 배열이므로 push 사용 불가. 테스트를 위해 생성
+  it("읽기 전용 배열에 값을 추가하거나 변경하면 타입 오류가 발생해야 한다", () => {
+    // @ts-expect-error: readonly 배열은 push 불가
     numbers.push(4);
-    expect(numbers).toThrowError();
+    // @ts-expect-error: readonly 배열은 값 변경 불가
+    numbers[0] = 99;
   });
 });
 
@@ -65,7 +66,7 @@ describe("문제 4. 사용자 정보를 업데이트하는 함수를 작성하�
 
     const result = updateUser(withoutAgeUser);
 
-    expect(result).toBe({ name: "Charlie", age: 18 });
+    expect(result).toEqual({ name: "Charlie", age: 18 });
   });
 
   it("나이가 있으면 그대로 유지", () => {
@@ -76,7 +77,7 @@ describe("문제 4. 사용자 정보를 업데이트하는 함수를 작성하�
 
     const result = updateUser(withAgeUser);
 
-    expect(result).toBe({ name: "Dana", age: 25 });
+    expect(result).toEqual({ name: "Dana", age: 25 });
   });
 });
 
@@ -84,18 +85,18 @@ describe("문제5. 아래와 같은 데이터 구조를 사용하여 특정 카�
   it("Electronics 카테고리 상품 이름 반환", () => {
     const result = getProductsByCategory("Electronics");
 
-    expect(result).toBe(["Laptop"]);
+    expect(result).toEqual(["Laptop"]);
   });
 
   it("Fashion 카테고리 상품 이름 반환", () => {
     const result = getProductsByCategory("Fashion");
 
-    expect(result).toBe(["Shoes"]);
+    expect(result).toEqual(["Shoes"]);
   });
 
   it("없는 카테고리는 빈 배열 반환", () => {
     const result = getProductsByCategory("Books");
 
-    expect(result).toBe([]);
+    expect(result).toEqual([]);
   });
 });
