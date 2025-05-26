@@ -45,6 +45,11 @@ interface IUser {
 
 // isPrimitive 함수 조건부 타입, 제네릭 도입해서 재사용성 높이기
 
+/**
+ * @template T
+ * @param {T} value
+ * @returns {value is T extends object | Function ? never : T}
+ */
 function isPrimitive<T>(
   value: T
 ): value is T extends object | Function ? never : T {
@@ -54,7 +59,7 @@ function isPrimitive<T>(
 }
 
 /**
- * @returns {value is "hello"}
+ * @returns {value is "hello"}s
  */
 isPrimitive("hello"); // true
 /**
