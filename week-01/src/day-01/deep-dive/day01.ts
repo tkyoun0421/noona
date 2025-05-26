@@ -86,3 +86,25 @@ type Partial<T> = {
 };
 
 type UserPartial = Partial<TUser>;
+
+// Tuple 배열 inter로 추론하기
+
+const products = [
+  ["Laptop", 1000, true],
+  ["Shoes", 50, false],
+  ["Book", 20, true],
+] as const;
+
+type Tuple<T> = T extends readonly (infer E)[] ? E : never;
+
+type Product = Tuple<typeof products>;
+
+export function getProductNamesAndPrices(
+  products: Product[]
+): [string, number][] {
+  return products.map(([name, price, _isInSock]) => [name, price]);
+}
+
+export function getAvailableProducts(products: Product[]): Product[] {
+  return products.filter(([_name, _price, isInStock]) => isInStock);
+}
