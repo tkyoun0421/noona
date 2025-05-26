@@ -35,7 +35,7 @@ describe("문제 2. 읽기 전용(readonly) 배열을 생성하고, 배열에 �
     // @ts-expect-error: readonly 배열은 push 불가
     numbers.push(4);
     // @ts-expect-error: readonly 배열은 값 변경 불가
-    numbers[0] = 99;
+    numbers[0] = 42;
   });
 });
 
