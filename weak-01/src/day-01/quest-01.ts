@@ -13,11 +13,6 @@ export let productName: string = "Mega Americano"; // 상품 이름
 export let productPrice: number = 3300; // 상품 가격
 export let isAvailable: boolean = true; // 상품 재고 여부
 
-// 예시 출력
-console.log(
-  `상품명: ${productName}, 가격: ${productPrice}, 재고 여부: ${isAvailable}`
-);
-
 // 문제 3. 두 숫자를 더하는 함수를 작성하고, 함수의 매개변수와 반환값에 타입을 지정하세요.
 export function addNumbers(a: number, b: number): number {
   if (typeof a !== "number" || typeof b !== "number") {

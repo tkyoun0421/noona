@@ -10,7 +10,7 @@ import {
   stringifyValue,
   userAge,
   userName,
-} from "../day01";
+} from "../quest-01";
 
 describe("문제 1. 다음 변수들의 타입을 지정해주세요", () => {
   it("userName은 'Alice' 문자 타입이어야 한다", () => {
