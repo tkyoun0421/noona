@@ -78,7 +78,7 @@ export function processUnknown(input: unknown): string | number {
     throw new Error("지원하지 않는 타입입니다.");
   }
 
-  if (typeof input === "string") {
+  if (isString(input)) {
     return input.toUpperCase();
   }
 
