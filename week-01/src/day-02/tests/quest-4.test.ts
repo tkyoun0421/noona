@@ -1,19 +1,28 @@
 import { describe, it, expect, vi } from "vitest";
-import { getStatusMessage } from "../quest-4";
+import {
+  getStatusMessage,
+  LogLevel,
+  logMessage,
+  processAny,
+  processTask,
+  processUnknown,
+  TaskStatus,
+  TaskStatus1,
+} from "../quest-4";
 
 describe("문제 1. 작업의 상태를 나타내는 enum을 작성하고, 상태에 따라 다른 메시지를 반환하는 함수를 작성하세요", () => {
   it("Pending 상태일 경우 메시지를 반환한다", () => {
-    expect(getStatusMessage(TaskStatus.Pending)).toBe("작업이 대기 중입니다.");
+    expect(getStatusMessage(TaskStatus1.Pending)).toBe("작업이 대기 중입니다.");
   });
 
   it("InProgress 상태일 경우 메시지를 반환한다", () => {
-    expect(getStatusMessage(TaskStatus.InProgress)).toBe(
+    expect(getStatusMessage(TaskStatus1.InProgress)).toBe(
       "작업이 진행 중입니다."
     );
   });
 
   it("Completed 상태일 경우 메시지를 반환한다", () => {
-    expect(getStatusMessage(TaskStatus.Completed)).toBe(
+    expect(getStatusMessage(TaskStatus1.Completed)).toBe(
       "작업이 완료되었습니다."
     );
   });
@@ -33,13 +42,13 @@ describe("문제 2. 아래 조건에 따라 함수를 작성하세요", () => {
   });
 
   it("Failed 상태일 경우 에러를 던짐", () => {
-    expect(() => processTask(TaskStatus.Failed, "task")).toThrow(
+    expect(() => processTask(TaskStatus.Failed, "task")).toThrowError(
       "작업이 실패했습니다."
     );
   });
 
   it("문자열이 아닌 input에 대해 에러를 던짐", () => {
-    expect(() => processTask(TaskStatus.Pending, 42)).toThrow(
+    expect(() => processTask(TaskStatus.Pending, 42)).toThrowError(
       "입력값은 문자열이어야 합니다."
     );
   });
@@ -90,7 +99,9 @@ describe("문제 4. 아래 조건을 만족하는 함수를 작성하세요.", (
     });
 
     it("다른 타입이면 에러를 발생시킴", () => {
-      expect(() => processUnknown(true)).toThrow("지원하지 않는 타입입니다.");
+      expect(() => processUnknown(true)).toThrowError(
+        "지원하지 않는 타입입니다."
+      );
     });
   });
 });
