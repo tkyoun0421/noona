@@ -10,12 +10,12 @@ export function isDefined<T>(
   return input !== null && input !== undefined;
 }
 
-export function isObject(input: unknown): input is object {
-  return typeof input === "object" && isDefined(input);
+export function isPlainObject(input: unknown): input is object {
+  return typeof input === "object" && input !== null && !Array.isArray(input);
 }
 
 export function isDefinedObject(input: unknown): input is object {
-  return isDefined(input) && isObject(input);
+  return isDefined(input) && isPlainObject(input);
 }
 
 // 💡 만약 Todo interface 구조가 바뀐다면 여기 함수도 변경해줘야 하는 이슈가 생긴다
