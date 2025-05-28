@@ -1,5 +1,4 @@
 // 문제 1. 상품(Product)과 할인(Discount) 정보를 병합하여 새로운 타입을 정의하고, 할인 적용 후의 가격을 계산하는 함수를 작성하세요
-
 interface Product {
   id: number;
   name: string;
@@ -36,7 +35,9 @@ type Order = ContactInfo & OrderInfo;
 export function printOrderSummary(order: Order): string {
   const { orderId, phone } = order;
 
-  return `Order ${orderId} (Phone: ${phone})`;
+  const message = `Order ${orderId} (Phone: ${phone})`;
+
+  return message;
 }
 
 // 문제 3. 사용자 프로필과 활동 기록 병합
@@ -54,9 +55,9 @@ interface Activity {
 type MergedUser = Profile & Activity;
 
 export function mergeUserData(profile: Profile, activity: Activity): MergedUser {
-  const result = { ...profile, ...activity };
+  const userData = { ...profile, ...activity };
 
-  return result;
+  return userData;
 }
 
 export function getUserSummary(mergedUser: MergedUser): string {
@@ -64,5 +65,7 @@ export function getUserSummary(mergedUser: MergedUser): string {
 
   const isoString = lastLogin.toISOString();
 
-  return `사용자 ${id} - ${name} (${email}) - 마지막 로그인: ${isoString}`;
+  const message = `사용자 ${id} - ${name} (${email}) - 마지막 로그인: ${isoString}`;
+
+  return message;
 }
