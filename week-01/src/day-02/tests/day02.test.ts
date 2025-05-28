@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   isDefined,
   isTodo,
-  isObject,
+  isPlainObject,
   isDefinedObject,
   getFirstElement,
 } from "../deep-dive/day02";
@@ -21,15 +21,15 @@ describe("isDefined 함수 테스트", () => {
   });
 });
 
-describe("isObject 함수 테스트", () => {
+describe("isPlainObject  함수 테스트", () => {
   it("객체 타입만 true 반환", () => {
-    expect(isObject({})).toBe(true);
-    expect(isObject([])).toBe(true);
-    expect(isObject(null)).toBe(false);
-    expect(isObject(123)).toBe(false);
-    expect(isObject("string")).toBe(false);
-    expect(isObject(undefined)).toBe(false);
-    expect(isObject(() => {})).toBe(false);
+    expect(isPlainObject({})).toBe(true);
+    expect(isPlainObject([])).toBe(false);
+    expect(isPlainObject(null)).toBe(false);
+    expect(isPlainObject(123)).toBe(false);
+    expect(isPlainObject("string")).toBe(false);
+    expect(isPlainObject(undefined)).toBe(false);
+    expect(isPlainObject(() => {})).toBe(false);
   });
 });
 
@@ -41,7 +41,7 @@ describe("isDefinedObject 함수 테스트", () => {
 
   it("객체인 경우 true", () => {
     expect(isDefinedObject({})).toBe(true);
-    expect(isDefinedObject([])).toBe(true);
+    expect(isDefinedObject([])).toBe(false);
   });
 
   it("객체가 아닌 경우 false", () => {

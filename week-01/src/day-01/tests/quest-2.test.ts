@@ -7,7 +7,7 @@ import {
   products,
   updateUser,
   type User,
-} from "../quest-02";
+} from "../quest-2";
 
 describe("문제 1.아래 객체를 보고 user의 타입을 작성하세요", () => {
   it("필수 필드(name, isAdmin)를 포함한 객체는 정상적으로 동작해야 한다", () => {
