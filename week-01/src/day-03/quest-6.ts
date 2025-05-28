@@ -102,7 +102,7 @@ export interface User {
  * 예를 들어, 아래와 같이 `type` 키만으로 구분하는 경우,
  * 예기치 않은 객체가 들어올 때 조건문에서 걸러지지 않아
  * 예상치 못한 사이드 이펙트가 발생할 수 있습니다.
- *
+ * @example
  * ```ts
  * interface Guest {
  *   type: "guest";
