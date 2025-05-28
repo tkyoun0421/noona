@@ -14,9 +14,10 @@ type Item = Product & Discount;
 
 export function calculateDiscountedPrice(item: Item): number {
   const PERCENT_BASE = 100;
-  const discountRate = 1 - item.discountPercentage / PERCENT_BASE;
 
-  return Math.round(item.price * discountRate);
+  const discountedPrice = Math.round(item.price - (item.price * item.discountPercentage) / PERCENT_BASE);
+
+  return discountedPrice;
 }
 
 // 문제 2. 아래의 조건에 따라 복합 데이터를 처리하는 타입을 정의하고, 관련된 함수를 작성하세요
@@ -33,7 +34,9 @@ interface OrderInfo {
 type Order = ContactInfo & OrderInfo;
 
 export function printOrderSummary(order: Order): string {
-  return `Order ${order.orderId} (Phone: ${order.phone})`;
+  const { orderId, phone } = order;
+
+  return `Order ${orderId} (Phone: ${phone})`;
 }
 
 // 문제 3. 사용자 프로필과 활동 기록 병합
@@ -52,6 +55,7 @@ type MergedUser = Profile & Activity;
 
 export function mergeUserData(profile: Profile, activity: Activity): MergedUser {
   const result = { ...profile, ...activity };
+
   return result;
 }
 
