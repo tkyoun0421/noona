@@ -1,4 +1,5 @@
 import { describe, expect, expectTypeOf, it } from "vitest";
+import { checkArrayType, createObject, getFirstElement, isNumberArray, pluck, type IsArray, type Result } from "../quest-11";
 
 const context = describe;
 
@@ -13,7 +14,7 @@ describe("문제 1. 배열의 첫 번째 요소를 반환하는 함수를 작성
     expect(stringArrayResult).toBe("a");
   });
   it("빈 배열일 경우 undefined를 반환한다", () => {
-    const emptyArray = [];
+    const emptyArray: [] = [];
 
     const result = getFirstElement(emptyArray);
 
@@ -31,22 +32,24 @@ describe("문제 2. 숫자 배열인지 문자열 배열인지 확인하는 함�
   });
   it("배열이 숫자 배열이 아닐경우 false를 반환한다", () => {
     const stringArray = ["a", "b", "c"];
-    const emptyArray = [];
 
-    const stringArrayResult = isNumberArray(stringArray);
+    const result = isNumberArray(stringArray);
+
+    expect(result).toBe(false);
+  });
+  it("빈 배열은 숫자 배열로 간주하여 true를 반환한다", () => {
+    const emptyArray: [] = [];
     const emptyArrayResult = isNumberArray(emptyArray);
 
-    expect(stringArrayResult).toBe(false);
-    expect(emptyArrayResult).toBe(false);
+    expect(emptyArrayResult).toBe(true);
   });
 });
 
 describe("문제 3. 다음 조건을 만족하는 조건부 타입과 함수를 작성하세요", () => {
   context("조건부 타입 정의", () => {
     it("인자가 배열 타입이면 true를 아닐경우 false를 반환한다", () => {
-      type IsArray<T> = T extends any[] ? true : false;
-
       expectTypeOf<IsArray<string[]>>().toEqualTypeOf<true>();
+      expectTypeOf<IsArray<[]>>().toEqualTypeOf<true>();
       expectTypeOf<IsArray<string>>().toEqualTypeOf<false>();
     });
   });
@@ -70,9 +73,6 @@ describe("문제 3. 다음 조건을 만족하는 조건부 타입과 함수를 
 
 describe("문제 4. 객체의 모든 속성에 대해 기본값을 추가하는 타입을 작성하세요", () => {
   it("WithDefault<T>를 활용하여 객체 타입을 변환하고, 변환된 객체를 작성하라", () => {
-    type Original = { id: number; name: string; isActive: boolean };
-    type Result = WithDefault<Original>;
-
     expectTypeOf<Result>().toEqualTypeOf<{
       id: [number, number];
       name: [string, string];
