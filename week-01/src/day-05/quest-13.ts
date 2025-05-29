@@ -63,18 +63,18 @@ export function createTeamMember(data: MemberData): TeamMember {
   };
 }
 
-type MemberFilter = Pick<TeamMember, "role" | "isActive">;
+type TeamMemberFilter = Pick<TeamMember, "role" | "isActive">;
 
 function createFilter<T>(filter: Partial<T>) {
   return (item: T) => Object.entries(filter).every(([key, value]) => item[key as keyof T] === value);
 }
 
-export function filterTeamMembers(members: TeamMember[], filter: MemberFilter): TeamMember[] {
+export function filterTeamMembers(members: TeamMember[], filter: TeamMemberFilter): TeamMember[] {
   return members.filter(createFilter(filter));
 }
 
-type MemberWithoutEmail = Omit<TeamMember, "email">;
+type TeamMemberWithoutEmail = Omit<TeamMember, "email">;
 
-export function removeSensitiveInfo(members: TeamMember[]): MemberWithoutEmail[] {
+export function removeSensitiveInfo(members: TeamMember[]): TeamMemberWithoutEmail[] {
   return members.map(({ email, ...rest }) => rest);
 }
