@@ -16,6 +16,7 @@ export function checkArrayType<T>(value: IsArray<T>): string {
   return Array.isArray(value) ? "This is an array" : "This is not array";
 }
 
+// 🧪🧪테스트용 함수
 export function checkArrayTypeAny(value: any[]): string {
   return Array.isArray(value) ? "This is an array" : "This is not array";
 }
