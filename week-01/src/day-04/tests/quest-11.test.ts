@@ -47,7 +47,7 @@ describe("문제 2. 숫자 배열인지 문자열 배열인지 확인하는 함�
 
 describe("문제 3. 다음 조건을 만족하는 조건부 타입과 함수를 작성하세요", () => {
   context("조건부 타입 정의", () => {
-    it("인자가 배열 타입이면 true를 아닐경우 false를 반환한다", () => {
+    it("제네릭 타입이 배열 타입이면 true를 아닐경우 false를 반환한다", () => {
       expectTypeOf<IsArray<string[]>>().toEqualTypeOf<true>();
       expectTypeOf<IsArray<[]>>().toEqualTypeOf<true>();
       expectTypeOf<IsArray<string>>().toEqualTypeOf<false>();
