@@ -29,3 +29,6 @@ export function processRequest<T extends RequestType>(type: T, data: RequestData
 
   throw new Error("존재하지 않는 타입입니다");
 }
+
+// 👀 type과 data를 따로 받아서 사용하면 함수 내에서 분기할 때 data가 type에 따라 타입이 추론 되지 않는 것 같음
+// 이런 구조라면 결국 어쩔 수 없이 타입 가드 방식을 사용하던 귀찮으면 as 로 단언하는 수 밖에 없어보임
