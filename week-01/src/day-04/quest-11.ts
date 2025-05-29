@@ -10,9 +10,9 @@ export function isNumberArray<T>(array: T[]): boolean {
 
 // 문제 3. 다음 조건을 만족하는 조건부 타입과 함수를 작성하세요
 
-export type IsArray<T> = T extends any[] ? true : false;
+export type IsArray<T> = T extends any[] ? T : never;
 
-export function checkArrayType<T>(value: T): string {
+export function checkArrayType<T>(value: IsArray<T>): string {
   return Array.isArray(value) ? "This is an array" : "This is not array";
 }
 
