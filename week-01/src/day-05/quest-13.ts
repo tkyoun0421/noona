@@ -65,12 +65,12 @@ export function createTeamMember(data: MemberData): TeamMember {
 
 type TeamMemberFilter = Pick<TeamMember, "role" | "isActive">;
 
-function createFilter<T>(filter: Partial<T>) {
+function pickFilter<T>(filter: Partial<T>): (item: T) => boolean {
   return (item: T) => Object.entries(filter).every(([key, value]) => item[key as keyof T] === value);
 }
 
 export function filterTeamMembers(members: TeamMember[], filter: TeamMemberFilter): TeamMember[] {
-  return members.filter(createFilter(filter));
+  return members.filter(pickFilter(filter));
 }
 
 type TeamMemberWithoutEmail = Omit<TeamMember, "email">;
