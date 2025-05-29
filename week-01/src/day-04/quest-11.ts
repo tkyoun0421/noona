@@ -16,6 +16,10 @@ export function checkArrayType<T>(value: IsArray<T>): string {
   return Array.isArray(value) ? "This is an array" : "This is not array";
 }
 
+export function checkArrayTypeAny(value: any[]): string {
+  return Array.isArray(value) ? "This is an array" : "This is not array";
+}
+
 // 문제 4. 객체의 모든 속성에 대해 기본값을 추가하는 타입을 작성하세요
 
 type WithDefault<T> = {

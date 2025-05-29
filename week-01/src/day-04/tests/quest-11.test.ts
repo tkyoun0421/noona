@@ -1,5 +1,5 @@
 import { describe, expect, expectTypeOf, it } from "vitest";
-import { checkArrayType, createObject, getFirstElement, isNumberArray, pluck, type IsArray, type Result } from "../quest-11";
+import { checkArrayType, checkArrayTypeAny, createObject, getFirstElement, isNumberArray, pluck, type IsArray, type Result } from "../quest-11";
 
 const context = describe;
 
@@ -48,9 +48,9 @@ describe("문제 2. 숫자 배열인지 문자열 배열인지 확인하는 함�
 describe("문제 3. 다음 조건을 만족하는 조건부 타입과 함수를 작성하세요", () => {
   context("조건부 타입 정의", () => {
     it("제네릭 타입이 배열 타입이면 true를 아닐경우 false를 반환한다", () => {
-      expectTypeOf<IsArray<string[]>>().toEqualTypeOf<true>();
-      expectTypeOf<IsArray<[]>>().toEqualTypeOf<true>();
-      expectTypeOf<IsArray<string>>().toEqualTypeOf<false>();
+      expectTypeOf<IsArray<string[]>>().toEqualTypeOf<string[]>();
+      expectTypeOf<IsArray<[]>>().toEqualTypeOf<[]>();
+      expectTypeOf<IsArray<string>>().toEqualTypeOf<never>();
     });
   });
 
@@ -61,8 +61,25 @@ describe("문제 3. 다음 조건을 만족하는 조건부 타입과 함수를 
       const object = { key: "value" };
 
       const arrayResult = checkArrayType(array);
+      //@ts-ignore
       const stringResult = checkArrayType(string);
+      //@ts-ignore
       const objectResult = checkArrayType(object);
+
+      expect(arrayResult).toBe("This is an array");
+      expect(stringResult).toBe("This is not array");
+      expect(objectResult).toBe("This is not array");
+    });
+    it("any[] 테스트", () => {
+      const array = [1, 2, 3];
+      const string = "Hello";
+      const object = { key: "value" };
+
+      const arrayResult = checkArrayTypeAny(array);
+      //@ts-ignore
+      const stringResult = checkArrayTypeAny(string);
+      //@ts-ignore
+      const objectResult = checkArrayTypeAny(object);
 
       expect(arrayResult).toBe("This is an array");
       expect(stringResult).toBe("This is not array");
