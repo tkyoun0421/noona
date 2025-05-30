@@ -1,5 +1,5 @@
 // 문제 1. 배열의 첫 번째 요소를 반환하는 함수를 작성하세요. 배열의 요소 타입에 관계없이 작동해야 합니다
-export function getFirstElement<T>(array: T[]): T {
+export function getFirstElement<T>(array: T[]): T | undefined {
   return array[0];
 }
 
@@ -10,9 +10,9 @@ export function isNumberArray<T>(array: T[]): boolean {
 
 // 문제 3. 다음 조건을 만족하는 조건부 타입과 함수를 작성하세요
 
-export type IsArray<T> = T extends any[] ? T : never;
+export type IsArray<T> = T extends any[] ? true : false;
 
-export function checkArrayType<T>(value: IsArray<T>): string {
+export function checkArrayType<T>(value: T): string {
   return Array.isArray(value) ? "This is an array" : "This is not array";
 }
 
@@ -31,13 +31,8 @@ export type Result = WithDefault<Original>;
 
 // 문제 5. 키와 값을 받아 객체를 생성하는 함수를 작성하세요
 
-type ObjectKey = keyof any;
-type KeyValueObject<K extends ObjectKey, V> = {
-  [P in K]: V;
-};
-
-export function createObject<K extends ObjectKey, V>(key: K, value: V): KeyValueObject<K, V> {
-  return { [key]: value } as KeyValueObject<K, V>;
+export function createObject<K extends PropertyKey, V>(key: K, value: V): { [P in K]: V } {
+  return { [key]: value } as { [P in K]: V };
 }
 
 // 문제 6. 사용자 정보를 나타내는 객체 배열에서 특정 속성만 추출하는 함수를 작성하세요
